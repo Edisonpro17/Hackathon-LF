@@ -1,23 +1,150 @@
 .App {
-  text-align: center;
-}
-
-.App-header {
-  background-color: #282c34;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  color: #222;
+  background: #f6f7fb;
   min-height: 100vh;
+}
+
+.app-fullscreen {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  min-height: 100vh;
+}
+
+.app-sidebar {
+  width: 240px;
+  background: linear-gradient(180deg, #ffffff, #fafafa);
+  border-right: 1px solid #e6e9ef;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.app-main {
+  flex: 1;
+  padding: 24px;
+}
+
+.profile {
+  margin-bottom: 16px;
+}
+
+.sidebar-nav button {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  text-align: left;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.sidebar-nav button.active {
+  background: #e53935;
   color: white;
+  border-color: #d32f2f;
 }
 
-.App-header h1 {
-  margin-bottom: 20px;
+.favorite label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 6px;
 }
 
-.App-header p {
-  margin-bottom: 30px;
-  color: #61dafb;
+.main-header h1 {
+  margin: 0 0 8px 0;
+}
+
+.main-content {
+  background: white;
+  padding: 18px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+/* Inicio logo larger */
+.inicio-logo {
+  max-width: 360px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+/* CRUD red theme */
+.reports-crud table thead tr { background: #e53935; color: #fff; }
+.reports-crud table thead th { color: #fff; }
+.reports-crud table tbody td { color: #000; }
+.reports-crud button { background: #e53935; color: #fff; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; }
+
+.report-form > div {
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.report-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+/* Make CRUD/form text clearly black for readability */
+.report-form label,
+.report-form input,
+.report-form select,
+.report-form textarea,
+.reports-status th,
+.reports-status td {
+  color: #000;
+}
+
+.report-form input[type="text"], .report-form input[type="file"], .report-form select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #dfe3ea;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.report-form button { 
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.reports-status table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.reports-status th, .reports-status td {
+  padding: 10px;
+  border-bottom: 1px solid #f0f2f6;
+  text-align: left;
+}
+
+.indicators {
+  margin-top: 16px;
+}
+
+.indicators-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.indicator {
+  background: linear-gradient(180deg,#fff,#fbfbff);
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  font-weight: 700;
+}
+
+/* small responsive tweaks */
+@media (max-width: 800px) {
+  .app-fullscreen { flex-direction: column; }
+  .app-sidebar { width: 100%; display: flex; gap: 12px; align-items: center; }
+  .sidebar-nav { display: flex; gap: 8px; }
+  .sidebar-nav button { flex: 1; }
 }

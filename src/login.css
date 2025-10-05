@@ -1,0 +1,172 @@
+/* From Uiverse.io by vinodjangid07 - adapted to red/white theme */
+.form_wrapper{
+  position: fixed; /* ensure full-viewport coverage */
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #e53935; /* full page red background */
+  z-index: 999; /* keep it above other content */
+}
+
+.form_main {
+  width: 360px;
+  max-width: 92%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff; /* white card */
+  padding: 32px;
+  box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.12);
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.form_main::before {
+  position: absolute;
+  content: "";
+  width: 260px;
+  height: 260px;
+  background-color: rgba(255,255,255,0.06); /* subtle white accent */
+  transform: rotate(45deg);
+  left: -120px;
+  bottom: 20px;
+  z-index: 1;
+  border-radius: 30px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.05);
+}
+
+.heading {
+  font-size: 1.6em;
+  color: #b71c1c; /* deep red */
+  font-weight: 700;
+  margin: 5px 0 10px 0;
+  z-index: 2;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom: 8px;
+  z-index:2;
+}
+
+.logo{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background: linear-gradient(135deg,#e53935,#b71c1c);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:1.05em;
+  box-shadow: 0 6px 18px rgba(183,28,28,0.25);
+}
+
+.brandImg{
+  width:56px;
+  height:56px;
+  object-fit:cover;
+  border-radius:8px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.18);
+}
+
+.brandTitle{ font-weight:700; color:#111; }
+.brandSubtitle{ font-size:0.8em; color:#666; margin-top:2px }
+
+.inputContainer {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 6px;
+  z-index: 3;
+  font-size: 0.95em;
+}
+
+.inputField {
+  width: 100%;
+  height: 36px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid rgb(220, 220, 220);
+  margin: 10px 0;
+  color: #333;
+  font-size: 0.95em;
+  font-weight: 500;
+  box-sizing: border-box;
+  padding-left: 34px;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.inputField:focus {
+  outline: none;
+  border-bottom: 2px solid #e53935; /* red focus */
+  box-shadow: 0 2px 8px rgba(229,57,53,0.08);
+}
+
+.inputField::placeholder {
+  color: rgb(140, 140, 140);
+  font-size: 1em;
+  font-weight: 500;
+}
+
+#button {
+  z-index: 2;
+  position: relative;
+  width: 100%;
+  border: none;
+  background-color: #e53935; /* red */
+  height: 42px;
+  color: white;
+  font-size: 1em;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  margin: 14px 0 8px 0;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: transform 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+  box-shadow: 0 6px 18px rgba(229,57,53,0.18);
+}
+
+#button:hover {
+  background-color: #b71c1c;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(183,28,28,0.22);
+}
+
+.forgotLink {
+  z-index: 2;
+  font-size: 0.8em;
+  font-weight: 500;
+  color: #b71c1c;
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+}
+
+.errorText{
+  z-index:2;
+  color: #b71c1c;
+  font-size: 0.85em;
+  margin: 6px 0 0 0;
+}
+
+@media (max-width:420px){
+  .form_main{ width: 96%; padding: 18px }
+  .heading{ font-size: 1.25em }
+}

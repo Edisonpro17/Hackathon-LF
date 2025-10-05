@@ -1,7 +1,7 @@
 let data = {
   /* ========== DATOS DEL COMERCIO ========== */
   // Email registrado en PagoPlux del comercio
-  PayboxRemail: "tu-email-comercio@ejemplo.com",
+  PayboxRemail: "jhanira1806@gmail.com",
   
   // Nombre del establecimiento en PagoPlux
   PayboxRename: "Mi Tienda",

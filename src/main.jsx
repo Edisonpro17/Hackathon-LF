@@ -4,6 +4,8 @@ import './index.css'
 import App from './App.jsx'
 import InicioAdmin from './inicio-admin.jsx'
 import KpiAdmin from './kpi-admin.jsx'
+import PresentadosAdmin from './presentados-admin.jsx'
+import AprobadosAdmin from './aprobados-admin.jsx'
 
 function RootApp() {
   const [path, setPath] = useState(window.location.pathname || '/')
@@ -23,6 +25,8 @@ function RootApp() {
 
   if (path === '/inicio-admin') return <InicioAdmin />
   if (path === '/kpis') return <KpiAdmin />
+  if (path === '/presentados-admin') return <PresentadosAdmin />
+  if (path === '/aprobados-admin') return <AprobadosAdmin />
   return <App />
 }
 

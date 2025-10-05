@@ -33,6 +33,7 @@ export default function KpiAdmin() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [propuestasOpen, setPropuestasOpen] = useState(false)
   const [proyectosOpen, setProyectosOpen] = useState(false)
+  const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/'
 
   function addKpi(e) {
     e.preventDefault()
@@ -63,15 +64,13 @@ export default function KpiAdmin() {
             <li>
               <button
                 className="nav-toggle"
-                onClick={(e) => {
-                  e.preventDefault()
-                  setPropuestasOpen((s) => !s)
-                }}
+                onClick={(e) => { e.preventDefault(); setPropuestasOpen((s) => !s) }}
               >
                 Propuestas
-                <span className={`chev ${propuestasOpen ? 'open' : ''}`}>53c</span>
+                <span className={`chev ${propuestasOpen ? 'open' : ''}`}>▾</span>
               </button>
               <ul className={`nested ${propuestasOpen ? 'open' : ''}`}>
+                <li>Propuestas presentadas</li>
                 <li>Propuestas aceptadas</li>
                 <li>Propuestas rechazadas</li>
                 <li>Propuestas por modificar</li>
@@ -80,23 +79,29 @@ export default function KpiAdmin() {
             <li>
               <a href="/kpis" onClick={(e) => { e.preventDefault(); window.appNavigate('/kpis') }}>KPI's aprobados</a>
             </li>
-            <li>Reportes</li>
             <li>
-              <button
-                className="nav-toggle"
-                onClick={(e) => {
-                  e.preventDefault()
-                  setProyectosOpen((s) => !s)
-                }}
-              >
-                Proyectos
-                <span className={`chev ${proyectosOpen ? 'open' : ''}`}>53c</span>
-              </button>
-              <ul className={`nested ${proyectosOpen ? 'open' : ''}`}>
-                <li>Proyectos reportados</li>
-                <li>Proyectos aprobados</li>
-              </ul>
+              <a href="https://app.powerbi.com/view?r=eyJrIjoiNTNkYjIxMjAtNTAxYy00NTdlLTg3MzktY2U0MDljNDgzMWEwIiwidCI6ImQ4MmUyZTBkLTk4ZTEtNGNlZS1hZjQ0LTZjN2I2MTcwNjZlNyIsImMiOjR9&pageName=5f816036bbbaa2127d99" target="_blank" rel="noopener noreferrer">Reportes</a>
             </li>
+            <li>
+							<button
+								className="nav-toggle"
+								onClick={(e) => {
+									e.preventDefault()
+									setProyectosOpen((s) => !s)
+								}}
+							>
+								Proyectos
+								<span className={`chev ${proyectosOpen ? 'open' : ''}`}>▾</span>
+							</button>
+							<ul className={`nested ${proyectosOpen ? 'open' : ''}`}>
+                                <li>
+                                  <a href="/presentados-admin" onClick={(e)=>{e.preventDefault(); window.appNavigate('/presentados-admin')}}>Proyectos presentados</a>
+                                </li>
+								<li>
+																	<a href="/aprobados-admin" onClick={(e)=>{e.preventDefault(); window.appNavigate('/aprobados-admin')}}>Proyectos aprobados</a>
+																</li>
+							</ul>
+						</li>
             <li>Donaciones</li>
             <li>Presupuestos asignados</li>
           </ul>
@@ -107,80 +112,75 @@ export default function KpiAdmin() {
         <div className="topbar">
           <div className="title">KPI's</div>
           <div>
-            <button
-              className="hamburger"
-              id="btnToggle"
-              onClick={() => setSidebarOpen((s) => !s)}
-              aria-label="Toggle navigation"
-            >
-              ☰
+            <button className="hamburger" id="btnToggle" onClick={() => setSidebarOpen((s) => !s)} aria-label="Toggle navigation">
+              
             </button>
           </div>
         </div>
-
-        <div className="kpi-page">
-          <div className="kpi-table">
-            {Object.keys(kpis).map((cat) => (
-              <div className="kpi-section" key={cat}>
-                <h3>{cat}</h3>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Indicador</th>
-                      <th>Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {kpis[cat].map((k, i) => (
-                      <tr key={k + i}>
-                        <td>{k}</td>
-                        <td>
-                          <button className="btn small">Editar</button>
-                          </td>
+          <div className="card kpi-card">
+            <div className="kpi-table">
+              {Object.keys(kpis).map((cat) => (
+                <div className="kpi-section" key={cat}>
+                  <h3>{cat}</h3>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Indicador</th>
+                        <th style={{ width: 180 }}>Acciones</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ))}
-          </div>
-
-          <div className="kpi-footer">
-            <button className="floating-plus" onClick={() => setShowForm((s) => !s)}>
-              +
-            </button>
-          </div>
-
-          {showForm && (
-            <div className="kpi-form-overlay">
-              <form className="kpi-form" onSubmit={addKpi}>
-                <h3>Agregar KPI</h3>
-                <label>
-                  Nombre
-                  <input value={newName} onChange={(e) => setNewName(e.target.value)} />
-                </label>
-                <label>
-                  Categoría
-                  <select value={newCategory} onChange={(e) => setNewCategory(e.target.value)}>
-                    {Object.keys(kpis).map((c) => (
-                      <option key={c} value={c}>
-                        {c}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <div className="form-actions">
-                  <button className="btn" type="submit">
-                    Agregar
-                  </button>
-                  <button className="btn" type="button" onClick={() => setShowForm(false)}>
-                    Cancelar
-                  </button>
+                    </thead>
+                    <tbody>
+                      {kpis[cat].map((k, i) => (
+                        <tr key={k + i}>
+                          <td>{k}</td>
+                          <td>
+                            <button className="btn small">Editar</button>
+                           
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-              </form>
+              ))}
             </div>
-          )}
-        </div>
+
+            <div className="kpi-footer">
+              <button className="floating-plus" onClick={() => setShowForm((s) => !s)}>
+                +
+              </button>
+            </div>
+
+            {showForm && (
+              <div className="kpi-form-overlay">
+                <form className="kpi-form" onSubmit={addKpi}>
+                  <h3>Agregar KPI</h3>
+                  <label>
+                    Nombre
+                    <input value={newName} onChange={(e) => setNewName(e.target.value)} />
+                  </label>
+                  <label>
+                    Categoría
+                    <select value={newCategory} onChange={(e) => setNewCategory(e.target.value)}>
+                      {Object.keys(kpis).map((c) => (
+                        <option key={c} value={c}>
+                          {c}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <div className="form-actions">
+                    <button className="btn" type="submit">
+                      Agregar
+                    </button>
+                    <button className="btn" type="button" onClick={() => setShowForm(false)}>
+                      Cancelar
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
+          </div>
       </main>
     </div>
   )

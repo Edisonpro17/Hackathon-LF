@@ -7,6 +7,11 @@
   background: var(--bg);
 }
 
+/* Make sure the root and body fill the viewport so .main can adapt */
+html, body, #root {
+  height: 100%;
+}
+
 :root {
   /* Primary brand color */
   --primary: #ec3e42; /* main color requested */
@@ -26,6 +31,7 @@
   --muted: #6b7280;
   --surface-border: #e6eef8;
   --sidebar-text: #e6eef8; /* text on primary sidebar */
+  --content-max: 1100px;
 }
 
 /* Sidebar */
@@ -92,7 +98,12 @@
 
 .main {
   flex: 1;
-  padding: 20px 28px;
+  /* Responsive padding: min 12px, scales with viewport, max 28px */
+  padding: clamp(12px, 2vw, 28px);
+  box-sizing: border-box;
+  /* Ensure main expands to viewport height and scrolls if content overflows */
+  min-height: 100vh;
+  overflow: auto;
 }
 
 .topbar {
@@ -107,16 +118,11 @@
   font-weight: 700;
 }
 
-.hamburger {
-  background: transparent;
-  border: 1px solid #e2e8f0;
-  padding: 6px 10px;
-  border-radius: 6px;
-}
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
+  /* Responsive grid: adapt number of columns to available width */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 16px;
 }
 
@@ -125,6 +131,13 @@
   border-radius: 8px;
   padding: 14px;
   box-shadow: 0 1px 3px rgba(2,6,23,0.08);
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 120px);
+}
+
+.card table {
+  flex: 1;
 }
 
 .big {
@@ -189,6 +202,8 @@
 /* Layout tweaks to make KPI content occupy available space */
 .content {
   padding: 20px 28px;
+  max-width: var(--content-max);
+  margin: 0 auto;
 }
 
 .kpi-card {
@@ -294,3 +309,4 @@ th, td {
   gap: 8px;
   margin-top: 12px;
 }
+

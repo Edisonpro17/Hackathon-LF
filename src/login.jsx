@@ -24,7 +24,7 @@ function Login({ onLogin }) {
       return
     }
 
-    if (username === 'favorita' && password === 'abcd') {
+    if (username === 'BANCO A' && password === 'abcd') {
       onLogin({ name: username, role: 'fundacion' })
       return
     }

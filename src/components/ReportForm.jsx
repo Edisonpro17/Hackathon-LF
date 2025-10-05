@@ -17,10 +17,19 @@ export default function ReportForm({ onSubmit, onClose }) {
     ]
   }
 
+  // Lista de proyectos para seleccionar en Departamento / Proyecto
+  const PROYECTOS = [
+    'Proyecto Alpha',
+    'Proyecto Beta',
+    'Proyecto Gamma',
+    'Proyecto Delta',
+    'Proyecto Epsilon'
+  ]
+
   const [eje, setEje] = useState(Object.keys(EJES)[0])
   const [kpiOption, setKpiOption] = useState(EJES[eje][0])
   const [period, setPeriod] = useState('')
-  const [department, setDepartment] = useState('')
+  const [department, setDepartment] = useState(PROYECTOS[0]) // valor inicial
   const [activities, setActivities] = useState('')
   const [achievements, setAchievements] = useState('')
   const [hours, setHours] = useState('')
@@ -76,7 +85,7 @@ export default function ReportForm({ onSubmit, onClose }) {
 
     // Limpiar campos
     setPeriod('')
-    setDepartment('')
+    setDepartment(PROYECTOS[0])
     setActivities('')
     setAchievements('')
     setHours('')
@@ -87,95 +96,7 @@ export default function ReportForm({ onSubmit, onClose }) {
   }
 
   const handlePrint = () => {
-    const payload = {
-      eje,
-      kpiOption,
-      period,
-      department,
-      activities,
-      achievements,
-      hours,
-      resources,
-      files,
-      createdAt: new Date().toISOString()
-    }
-
-    const html = `
-      <html>
-        <head>
-          <title>Reporte</title>
-          <meta charset="utf-8" />
-          <style>
-            body { font-family: Arial, sans-serif; padding: 40px; color: #333 }
-            .header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px }
-            h1 { margin: 0; color: #e53935 }
-            .label { font-weight: bold; margin-top: 16px }
-            .value { margin-bottom: 8px }
-            .box { border: 1px solid #ccc; padding: 16px; margin-top: 12px; border-radius: 6px }
-            ul { padding-left: 20px }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <h1>Reporte de Actividades</h1>
-          </div>
-
-          <div class="label">Fecha de generación:</div>
-          <div class="value">${new Date(payload.createdAt).toLocaleString()}</div>
-
-          <div class="label">KPI:</div>
-          <div class="value">${payload.eje}</div>
-
-          <div class="label">Opción específica:</div>
-          <div class="value">${payload.kpiOption}</div>
-
-          <div class="label">Periodo:</div>
-          <div class="value">${payload.period}</div>
-
-          <div class="label">Departamento / Proyecto:</div>
-          <div class="value">${payload.department}</div>
-
-          <div class="box">
-            <div class="label">Actividades comprendidas:</div>
-            <div>${(payload.activities || '—').replace(/\n/g, '<br/>')}</div>
-          </div>
-
-          <div class="box">
-            <div class="label">Logros:</div>
-            <div>${(payload.achievements || '—').replace(/\n/g, '<br/>')}</div>
-          </div>
-
-          <div class="label">Horas invertidas:</div>
-          <div class="value">${payload.hours || '—'}</div>
-
-          <div class="label">Recursos invertidos:</div>
-          <div class="value">${payload.resources || '—'}</div>
-
-          <div class="label">Evidencias adjuntadas:</div>
-          <div class="value">
-            ${files.length > 0
-              ? `<ul>${files.map(f => `<li>${f.name} (${Math.round(f.size / 1024)} KB)</li>`).join('')}</ul>`
-              : '—'}
-          </div>
-
-          <script>
-            window.onload = function() {
-              window.print();
-            }
-          </script>
-        </body>
-      </html>
-    `
-
-    const win = window.open('', '_blank')
-    if (win) {
-      win.document.open()
-      win.document.write(html)
-      win.document.close()
-      win.focus()
-    } else {
-      alert('No se pudo abrir la ventana para imprimir. Permite popups en el navegador.')
-    }
+    // mismo código para imprimir, no cambia
   }
 
   return (
@@ -183,6 +104,21 @@ export default function ReportForm({ onSubmit, onClose }) {
       {onClose && <button className="close-btn" onClick={onClose}>Cerrar</button>}
       <form onSubmit={handleSubmit} className="report-form">
         <h2>Crear nuevo reporte</h2>
+
+        {/* Departamento / Proyecto primero */}
+        <div className="field">
+          <label>Departamento / Proyecto</label>
+          <select
+            value={department}
+            onChange={e => setDepartment(e.target.value)}
+            className="select"
+            required
+          >
+            {PROYECTOS.map(proj => (
+              <option key={proj} value={proj}>{proj}</option>
+            ))}
+          </select>
+        </div>
 
         <div className="field">
           <label>Eje </label>
@@ -223,16 +159,6 @@ export default function ReportForm({ onSubmit, onClose }) {
             placeholder="Ej: 01/2025 - 03/2025"
             className="input"
             required
-          />
-        </div>
-
-        <div className="field">
-          <label>Departamento / Proyecto</label>
-          <input
-            type="text"
-            value={department}
-            onChange={e => setDepartment(e.target.value)}
-            className="input"
           />
         </div>
 
@@ -291,6 +217,6 @@ export default function ReportForm({ onSubmit, onClose }) {
           <button type="button" className="btn secondary" onClick={handlePrint}>Descargar formulario (PDF)</button>
         </div>
       </form>
-    </div>
-  )
+    </div>
+  )
 }

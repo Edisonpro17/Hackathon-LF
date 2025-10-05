@@ -51,7 +51,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 18px;
+  margin-bottom: 22px;
 }
 
 .dot {
@@ -67,21 +67,50 @@
 }
 
 .nav-list li {
-  margin: 8px 0;
+  margin: 12px 0; /* more breathing room between items */
 }
 
 .nav-link {
   color: var(--sidebar-text);
   text-decoration: none;
-  display: block;
-  padding: 8px 10px;
-  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  transition: background 160ms ease, transform 120ms ease, color 160ms ease;
+}
+
+.nav-link:hover {
+  background: rgba(255,255,255,0.06);
+  transform: translateY(-1px);
+}
+
+/* focus visible for keyboard users */
+.nav-link:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(208,52,58,0.12);
+  border-radius: 8px;
 }
 
 .nav-link.active {
   background: linear-gradient(90deg,var(--primary-700),var(--primary));
   color: var(--primary-contrast);
-  font-weight: 600;
+  font-weight: 700;
+  padding-left: 14px; /* make room when we add a left stripe */
+  position: relative;
+}
+
+/* left colored stripe to indicate active item */
+.nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 4px;
+  background: var(--primary-700);
+  border-radius: 4px 0 0 4px;
 }
 
 .footer-note {

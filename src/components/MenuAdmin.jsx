@@ -40,7 +40,7 @@ export default function MenuAdmin({ currentPath = '/' }) {
             </button>
             <ul className={`nested ${propuestasOpen ? 'open' : ''}`}>
               <li>
-                <a className={`nav-link ${currentPath === '/presentados-admin' ? 'active' : ''}`} href="/presentados-admin" onClick={(e)=>{e.preventDefault(); go('/presentados-admin')}}>Propuestas presentadas</a>
+                <a className="nav-link" href="#">Propuestas presentadas</a>
               </li>
               <li>
                 <a className="nav-link" href="#">Propuestas aceptadas</a>

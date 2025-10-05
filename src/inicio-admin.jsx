@@ -68,7 +68,7 @@ export default function InicioAdmin({ initialValue = 20000.0, projectsMonth3 = 3
 							<a href="/kpis" onClick={(e) => { e.preventDefault(); window.appNavigate('/kpis') }}>KPI's aprobados</a>
 						</li>
 						<li>
-							<a href="https://app.powerbi.com/view?r=eyJrIjoiNTNkYjIxMjAtNTAxYy00NTdlLTg3MzktY2U0MDljNDgzMWEwIiwidCI6ImQ4MmUyZTBkLTk4ZTEtNGNlZS1hZjQ0LTZjN2I2MTcwNjZlNyIsImMiOjR9&pageName=5f816036bbbaa2127d99" target="_blank" rel="noopener noreferrer">Reportes</a>
+							<a href="https://app.powerbi.com/view?r=eyJrIjoiODViODZhYjgtYTkzMS00MGQ0LTk2M2UtMGI0MzZiYjI3ZGY5IiwidCI6ImQ4MmUyZTBkLTk4ZTEtNGNlZS1hZjQ0LTZjN2I2MTcwNjZlNyIsImMiOjR9" target="_blank" rel="noopener noreferrer">Reportes</a>
 						</li>
                        <li>
 							<button

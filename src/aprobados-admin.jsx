@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './styles.css'
+import PpxButton from './components/PpxButton'
+import { data } from './configuration/ppx.data'
 
 function loadApproved() {
   try {
@@ -53,7 +55,9 @@ export default function AprobadosAdmin() {
                   <td>{p.id}</td>
                   <td>{p.title}</td>
                   <td>{p.foundation}</td>
-                  <td><button className="btn small" onClick={() => handlePay(p.id)}>Pago</button></td>
+<td>
+  <PpxButton data={data} />
+</td>
                 </tr>
               ))}
             </tbody>

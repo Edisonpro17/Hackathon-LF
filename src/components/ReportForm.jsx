@@ -1,10 +1,24 @@
 import React, { useState } from 'react'
 import './ReportForm.css'
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5 MB
+const MAX_FILE_SIZE = 5 * 1024 * 1024
 const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'application/pdf', 'image/jpg']
 
-export default function ReportForm({ onSubmit, foundations = [], favorite, onClose }) {
+export default function ReportForm({ onSubmit, onClose }) {
+  const EJES = {
+    'Nutrición': ['Alimentos entregados', 'Raciones de alimentos', 'Beneficiarios con alimentos'],
+    'Educación': ['Escuelas apoyadas', 'Asistencia a la escuela', 'Capacitaciones en habilidades blandas y duras'],
+    'Emprendimiento': ['Emprendedores apoyados', 'Formación en emprendimiento'],
+    'Ambiente': ['Conciencia ambiental'],
+    'Equidad de Género': [
+      'Formación en habilidades para la disminución de la brecha de género',
+      'Formación en habilidades digitales',
+      'Mujeres beneficiarias de todos los programas'
+    ]
+  }
+
+  const [eje, setEje] = useState(Object.keys(EJES)[0])
+  const [kpiOption, setKpiOption] = useState(EJES[eje][0])
   const [period, setPeriod] = useState('')
   const [department, setDepartment] = useState('')
   const [activities, setActivities] = useState('')
@@ -13,15 +27,6 @@ export default function ReportForm({ onSubmit, foundations = [], favorite, onClo
   const [resources, setResources] = useState('')
   const [files, setFiles] = useState([])
   const [errors, setErrors] = useState([])
-  const EJES = {
-    'Nutrición': ['Alimentos entregados', 'Raciones de alimentos', 'Beneficiarios con alimentos'],
-    'Educación': ['Escuelas apoyadas', 'Asistencia a la escuela', 'Capacitaciones en habilidades'],
-    'Emprendimiento': ['Emprendedores apoyados', 'Formación en emprendimiento'],
-    'Ambiente': ['Conciencia ambiental'],
-    'Equidad de Género': ['Formación en habilidades', 'Formación en habilidades digitales', 'Mujeres beneficiarias']
-  }
-  const [eje, setEje] = useState(Object.keys(EJES)[0])
-  const [selectedOptions, setSelectedOptions] = useState([])
 
   const validateFiles = (fileList) => {
     const arr = Array.from(fileList)
@@ -43,15 +48,12 @@ export default function ReportForm({ onSubmit, foundations = [], favorite, onClo
     e.preventDefault()
     if (errors.length > 0) return
 
-    // convert hours (HH:MM) to decimal hours if possible
     let hoursDecimal = null
-    if (hours && typeof hours === 'string' && hours.includes(':')) {
-      const [hh, mm] = hours.split(':').map(p => parseInt(p || '0', 10))
-      if (!Number.isNaN(hh) && !Number.isNaN(mm)) {
-        hoursDecimal = hh + (mm / 60)
+    if (hours.includes(':')) {
+      const [hh, mm] = hours.split(':').map(Number)
+      if (!isNaN(hh) && !isNaN(mm)) {
+        hoursDecimal = hh + mm / 60
       }
-    } else if (hours && !isNaN(Number(hours))) {
-      hoursDecimal = Number(hours)
     }
 
     const report = {
@@ -60,114 +62,234 @@ export default function ReportForm({ onSubmit, foundations = [], favorite, onClo
       department,
       activities,
       achievements,
-      hours, // original string (HH:MM)
-      hoursDecimal, // numeric hours (e.g. 1.5)
+      hours,
+      hoursDecimal,
       resources,
       files: files.map(f => ({ name: f.name, size: f.size, type: f.type })),
       status: 'Enviado',
       eje,
-      options: selectedOptions,
-      createdAt: new Date().toISOString(),
+      kpiOption,
+      createdAt: new Date().toISOString()
     }
 
     onSubmit(report)
+
     // Limpiar campos
-    setPeriod(''); setDepartment(''); setActivities(''); setAchievements('')
-    setHours(''); setResources(''); setFiles([]); setErrors([])
-    e.target.reset()
+    setPeriod('')
+    setDepartment('')
+    setActivities('')
+    setAchievements('')
+    setHours('')
+    setResources('')
+    setFiles([])
+    setErrors([])
+    setKpiOption(EJES[eje][0])
+  }
+
+  const handlePrint = () => {
+    const payload = {
+      eje,
+      kpiOption,
+      period,
+      department,
+      activities,
+      achievements,
+      hours,
+      resources,
+      files,
+      createdAt: new Date().toISOString()
+    }
+
+    const html = `
+      <html>
+        <head>
+          <title>Reporte</title>
+          <meta charset="utf-8" />
+          <style>
+            body { font-family: Arial, sans-serif; padding: 40px; color: #333 }
+            .header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px }
+            h1 { margin: 0; color: #e53935 }
+            .label { font-weight: bold; margin-top: 16px }
+            .value { margin-bottom: 8px }
+            .box { border: 1px solid #ccc; padding: 16px; margin-top: 12px; border-radius: 6px }
+            ul { padding-left: 20px }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h1>Reporte de Actividades</h1>
+          </div>
+
+          <div class="label">Fecha de generación:</div>
+          <div class="value">${new Date(payload.createdAt).toLocaleString()}</div>
+
+          <div class="label">KPI:</div>
+          <div class="value">${payload.eje}</div>
+
+          <div class="label">Opción específica:</div>
+          <div class="value">${payload.kpiOption}</div>
+
+          <div class="label">Periodo:</div>
+          <div class="value">${payload.period}</div>
+
+          <div class="label">Departamento / Proyecto:</div>
+          <div class="value">${payload.department}</div>
+
+          <div class="box">
+            <div class="label">Actividades comprendidas:</div>
+            <div>${(payload.activities || '—').replace(/\n/g, '<br/>')}</div>
+          </div>
+
+          <div class="box">
+            <div class="label">Logros:</div>
+            <div>${(payload.achievements || '—').replace(/\n/g, '<br/>')}</div>
+          </div>
+
+          <div class="label">Horas invertidas:</div>
+          <div class="value">${payload.hours || '—'}</div>
+
+          <div class="label">Recursos invertidos:</div>
+          <div class="value">${payload.resources || '—'}</div>
+
+          <div class="label">Evidencias adjuntadas:</div>
+          <div class="value">
+            ${files.length > 0
+              ? `<ul>${files.map(f => `<li>${f.name} (${Math.round(f.size / 1024)} KB)</li>`).join('')}</ul>`
+              : '—'}
+          </div>
+
+          <script>
+            window.onload = function() {
+              window.print();
+            }
+          </script>
+        </body>
+      </html>
+    `
+
+    const win = window.open('', '_blank')
+    if (win) {
+      win.document.open()
+      win.document.write(html)
+      win.document.close()
+      win.focus()
+    } else {
+      alert('No se pudo abrir la ventana para imprimir. Permite popups en el navegador.')
+    }
   }
 
   return (
-    <div className="report-form-container" role="region" aria-label="Formulario de reportes">
-      {onClose && <button className="close-btn" type="button" onClick={onClose}>Cerrar</button>}
-      <form onSubmit={handleSubmit} className="report-form report-form-inner" aria-label="Formulario de reportes">
-      <div>
-        <label>Eje</label>
-        <select value={eje} onChange={e => { setEje(e.target.value); setSelectedOptions([]) }} className="select">
-          {Object.keys(EJES).map(k => <option key={k} value={k}>{k}</option>)}
-        </select>
-      </div>
+    <div className="report-form-container">
+      {onClose && <button className="close-btn" onClick={onClose}>Cerrar</button>}
+      <form onSubmit={handleSubmit} className="report-form">
+        <h2>Crear nuevo reporte</h2>
 
-      <div>
-        <label>Periodo comprendido</label>
-        <input value={period} onChange={e => setPeriod(e.target.value)} placeholder="Ej: 01/2025 - 03/2025" required className="input" />
-      </div>
+        <div className="field">
+          <label>Eje </label>
+          <select
+            value={eje}
+            onChange={e => {
+              const selected = e.target.value
+              setEje(selected)
+              setKpiOption(EJES[selected][0])
+            }}
+            className="select"
+          >
+            {Object.keys(EJES).map(key => (
+              <option key={key} value={key}>{key}</option>
+            ))}
+          </select>
+        </div>
 
-      <div>
-        <label>Departamento / Proyecto</label>
-        <input value={department} onChange={e => setDepartment(e.target.value)} placeholder="Nombre del departamento o proyecto" className="input" />
-      </div>
+        <div className="field">
+          <label>Opción específica Eje</label>
+          <select
+            value={kpiOption}
+            onChange={e => setKpiOption(e.target.value)}
+            className="select"
+          >
+            {EJES[eje].map((opt, i) => (
+              <option key={i} value={opt}>{opt}</option>
+            ))}
+          </select>
+        </div>
 
-      <div>
-        <label>Actividades comprendidas</label>
-        <textarea value={activities} onChange={e => setActivities(e.target.value)} rows={3} className="textarea" />
-      </div>
+        <div className="field">
+          <label>Periodo comprendido</label>
+          <input
+            type="text"
+            value={period}
+            onChange={e => setPeriod(e.target.value)}
+            placeholder="Ej: 01/2025 - 03/2025"
+            className="input"
+            required
+          />
+        </div>
 
-      <div>
-        <label>Logros</label>
-        <textarea value={achievements} onChange={e => setAchievements(e.target.value)} rows={2} className="textarea" />
-      </div>
+        <div className="field">
+          <label>Departamento / Proyecto</label>
+          <input
+            type="text"
+            value={department}
+            onChange={e => setDepartment(e.target.value)}
+            className="input"
+          />
+        </div>
 
-      <div>
-        <label>Horas invertidas</label>
-        <input type="time" value={hours} onChange={e => setHours(e.target.value)} className="input" />
-      </div>
+        <div className="field">
+          <label>Horas invertidas</label>
+          <input
+            type="time"
+            value={hours}
+            onChange={e => setHours(e.target.value)}
+            className="input"
+          />
+        </div>
 
-      <div>
-        <label>Recursos invertidos</label>
-        <input value={resources} onChange={e => setResources(e.target.value)} placeholder="Monto o descripción" className="input" />
-      </div>
+        <div className="field">
+          <label>Actividades comprendidas</label>
+          <textarea
+            value={activities}
+            onChange={e => setActivities(e.target.value)}
+            rows={3}
+            className="textarea"
+          />
+        </div>
 
-      <div>
-        <label>Adjuntar evidencias (png, jpg, jpeg, pdf) — máximo 5MB por archivo</label>
-  <input type="file" multiple onChange={handleFiles} className="file-input" />
+        <div className="field">
+          <label>Logros</label>
+          <textarea
+            value={achievements}
+            onChange={e => setAchievements(e.target.value)}
+            rows={3}
+            className="textarea"
+          />
+        </div>
 
-        {errors.length > 0 && (
-          <div className="file-errors" role="alert">
-            <ul>
-              {errors.map((err, i) => <li key={i} style={{ color: '#b71c1c' }}>{err}</li>)}
+        <div className="field">
+          <label>Recursos invertidos</label>
+          <input
+            type="text"
+            value={resources}
+            onChange={e => setResources(e.target.value)}
+            className="input"
+          />
+        </div>
+
+        <div className="field">
+          <label>Adjuntar archivos (PDF, JPG, PNG) máx 5MB</label>
+          <input type="file" multiple onChange={handleFiles} />
+          {errors.length > 0 && (
+            <ul className="errors">
+              {errors.map((err, i) => <li key={i}>{err}</li>)}
             </ul>
-          </div>
-        )}
+          )}
+        </div>
 
-        {files.length > 0 && (
-          <ul>
-            {files.map((f, i) => <li key={i}>{f.name} ({Math.round(f.size / 1024)} KB)</li>)}
-          </ul>
-        )}
-      </div>
-
-      <div className="actions">
-        <button type="submit" disabled={errors.length > 0} className="btn primary">Enviar informe</button>
-
-        <button type="button" onClick={() => {
-          if (!favorite) return alert('No hay fundación favorita seleccionada')
-          // quick-send should also include decimal hours
-          let quickHoursDecimal = null
-          if (hours && typeof hours === 'string' && hours.includes(':')) {
-            const [hh, mm] = hours.split(':').map(p => parseInt(p || '0', 10))
-            if (!Number.isNaN(hh) && !Number.isNaN(mm)) quickHoursDecimal = hh + (mm / 60)
-          } else if (hours && !isNaN(Number(hours))) {
-            quickHoursDecimal = Number(hours)
-          }
-
-          const quickReport = { id: Date.now(), period, department, activities, achievements, hours, hoursDecimal: quickHoursDecimal, resources, files: files.map(f => ({ name: f.name, size: f.size, type: f.type })), status: 'Enviado (rápido)', createdAt: new Date().toISOString() }
-          onSubmit(quickReport, favorite)
-          setPeriod(''); setDepartment(''); setActivities(''); setAchievements('')
-          setHours(''); setResources(''); setFiles([]); setErrors([])
-        }} className="btn secondary">Enviar a fundación favorita</button>
-
-        <button type="button" onClick={() => {
-          const payload = { eje, period, department, activities, achievements, hours, resources, files: files.map(f => ({ name: f.name, size: f.size, type: f.type })), createdAt: new Date().toISOString() }
-          const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' })
-          const url = URL.createObjectURL(blob)
-          const a = document.createElement('a')
-          a.href = url
-          a.download = `reporte_${Date.now()}.json`
-          a.click()
-          URL.revokeObjectURL(url)
-        }} className="btn success">Descargar formulario</button>
-      </div>
+        <div className="form-actions">
+          <button type="submit" className="btn primary">Enviar informe</button>
+          <button type="button" className="btn secondary" onClick={handlePrint}>Descargar formulario (PDF)</button>
+        </div>
       </form>
     </div>
   )

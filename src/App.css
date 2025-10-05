@@ -62,20 +62,6 @@
   box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
 
-/* Inicio logo larger */
-.inicio-logo {
-  max-width: 360px;
-  width: 100%;
-  height: auto;
-  margin-bottom: 16px;
-}
-
-/* CRUD red theme */
-.reports-crud table thead tr { background: #e53935; color: #fff; }
-.reports-crud table thead th { color: #fff; }
-.reports-crud table tbody td { color: #000; }
-.reports-crud button { background: #e53935; color: #fff; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; }
-
 .report-form > div {
   margin-bottom: 12px;
   text-align: left;
@@ -85,16 +71,6 @@
   display: block;
   font-weight: 600;
   margin-bottom: 6px;
-}
-
-/* Make CRUD/form text clearly black for readability */
-.report-form label,
-.report-form input,
-.report-form select,
-.report-form textarea,
-.reports-status th,
-.reports-status td {
-  color: #000;
 }
 
 .report-form input[type="text"], .report-form input[type="file"], .report-form select {

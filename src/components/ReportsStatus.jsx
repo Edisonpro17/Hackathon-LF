@@ -11,13 +11,9 @@ export default function ReportsStatus({ reports = [] }) {
           <tr>
             <th>ID</th>
             <th>Fecha</th>
-            <th>Eje</th>
-            <th>Periodo</th>
-            <th>Departamento / Proyecto</th>
-            <th>Actividades</th>
-            <th>Logros</th>
-            <th>Horas</th>
-            <th>Recursos</th>
+            <th>KPI</th>
+            <th>Opciones</th>
+            <th>Indicadores</th>
             <th>Evidencias</th>
             <th>Estado</th>
           </tr>
@@ -28,12 +24,11 @@ export default function ReportsStatus({ reports = [] }) {
               <td>{r.id}</td>
               <td>{new Date(r.createdAt).toLocaleString()}</td>
               <td>{r.eje || '—'}</td>
-              <td>{r.period || '—'}</td>
-              <td>{r.department || '—'}</td>
-              <td style={{ maxWidth: 240 }}>{r.activities || '—'}</td>
-              <td style={{ maxWidth: 200 }}>{r.achievements || '—'}</td>
-              <td>{r.hours || '—'}</td>
-              <td>{r.resources || '—'}</td>
+              <td>{r.options && r.options.length > 0 ? r.options.join(', ') : '—'}</td>
+              <td>
+                <div>Ind1: {r.indicator1}</div>
+                <div>Ind2: {r.indicator2}</div>
+              </td>
               <td>
                 {r.files && r.files.length > 0 ? (
                   <ul>

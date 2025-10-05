@@ -1,101 +1,102 @@
-.report-form-container {
-  /* Static full-width container (no overlay) so CRUD remains visible */
-  position: relative;
-  width: 100%;
-  background: #ffffff;
-  padding: 24px;
-  box-sizing: border-box;
-  border-top: 6px solid #e53935; /* primary red accent */
-}
+/* ReportForm.css mejorado */
 
-.report-form-container .report-form-inner {
-  max-width: 980px;
-  margin: 0 auto;
-}
-
-.report-form-fullscreen .close-btn {
-  position: absolute;
-  right: 16px;
-  top: 16px;
-  background: transparent;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 6px 10px;
-  cursor: pointer;
-}
-
-.report-form-container label {
-  color: #000;
-}
-
-.report-form-container input,
-.report-form-container select,
-.report-form-container textarea {
-  color: #000;
-}
-
-/* Form layout and controls */
 .report-form {
-  background: #fff;
+  background-color: #fff;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  max-width: 700px;
+  margin: 20px auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-header h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: #333;
+}
+
+.form-header p {
+  margin: 4px 0 20px 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.field {
   display: flex;
   flex-direction: column;
-  gap: 14px;
 }
 
-.report-form .input,
-.report-form .select,
-.report-form .textarea {
-  width: 100%;
-  padding: 8px 10px;
-  border: 1px solid #dfe3ea;
-  border-radius: 6px;
-  box-sizing: border-box;
+.field.full {
+  grid-column: 1 / -1;
 }
 
-.report-form .textarea { min-height: 60px; }
+.field label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #333;
+}
 
-.report-form .file-input { padding: 6px 0; }
+.input, .select, .textarea, .file-input {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+}
 
-.report-form .actions {
+textarea.textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.file-errors {
+  margin-top: 6px;
+  color: #b71c1c;
+  font-size: 0.85rem;
+}
+
+.file-list {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  list-style: disc;
+  padding-left: 18px;
+}
+
+.form-actions {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .btn {
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 500;
   cursor: pointer;
+  border: none;
+  font-size: 0.95rem;
+}
+
+.btn.primary {
+  background-color: #1976d2;
   color: #fff;
 }
-.btn.primary { background: #e53935; }
-.btn.secondary { background: #fff; color: #e53935; border: 1px solid #e53935; }
-.btn.success { background: #e53935; }
 
-.report-form h2, .report-form h3 {
-  color: #e53935;
+.btn.success {
+  background-color: #43a047;
+  color: #fff;
 }
 
-.report-form-container {
-  color: #000;
-}
-
-.close-btn {
-  position: absolute;
-  right: 18px;
-  top: 18px;
-  background: transparent;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 6px 10px;
-  cursor: pointer;
-}
-
-@media (max-width: 720px) {
-  .report-form-inner { padding: 0 8px; }
-  .report-form { padding: 14px; }
+.btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }

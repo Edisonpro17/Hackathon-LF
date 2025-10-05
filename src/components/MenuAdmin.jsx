@@ -59,7 +59,7 @@ export default function MenuAdmin({ currentPath = '/' }) {
           </li>
 
           <li>
-            <a className="nav-link" href="https://app.powerbi.com/view?r=eyJrIjoiNTNkYjIxMjAtNTAxYy00NTdlLTg3MzktY2U0MDljNDgzMWEwIiwidCI6ImQ4MmUyZTBkLTk4ZTEtNGNlZS1hZjQ0LTZjN2I2MTcwNjZlNyIsImMiOjR9&pageName=5f816036bbbaa2127d99" target="_blank" rel="noopener noreferrer">Reportes</a>
+            <a className="nav-link" href="https://app.powerbi.com/view?r=eyJrIjoiODViODZhYjgtYTkzMS00MGQ0LTk2M2UtMGI0MzZiYjI3ZGY5IiwidCI6ImQ4MmUyZTBkLTk4ZTEtNGNlZS1hZjQ0LTZjN2I2MTcwNjZlNyIsImMiOjR9" target="_blank" rel="noopener noreferrer">Reportes</a>
           </li>
 
           <li>

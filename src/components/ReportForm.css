@@ -1,0 +1,101 @@
+.report-form-container {
+  /* Static full-width container (no overlay) so CRUD remains visible */
+  position: relative;
+  width: 100%;
+  background: #ffffff;
+  padding: 24px;
+  box-sizing: border-box;
+  border-top: 6px solid #e53935; /* primary red accent */
+}
+
+.report-form-container .report-form-inner {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.report-form-fullscreen .close-btn {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.report-form-container label {
+  color: #000;
+}
+
+.report-form-container input,
+.report-form-container select,
+.report-form-container textarea {
+  color: #000;
+}
+
+/* Form layout and controls */
+.report-form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.report-form .input,
+.report-form .select,
+.report-form .textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #dfe3ea;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.report-form .textarea { min-height: 60px; }
+
+.report-form .file-input { padding: 6px 0; }
+
+.report-form .actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+}
+.btn.primary { background: #e53935; }
+.btn.secondary { background: #fff; color: #e53935; border: 1px solid #e53935; }
+.btn.success { background: #e53935; }
+
+.report-form h2, .report-form h3 {
+  color: #e53935;
+}
+
+.report-form-container {
+  color: #000;
+}
+
+.close-btn {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+@media (max-width: 720px) {
+  .report-form-inner { padding: 0 8px; }
+  .report-form { padding: 14px; }
+}

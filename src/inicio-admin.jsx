@@ -100,16 +100,7 @@ export default function InicioAdmin({ initialValue = 20000.0, projectsMonth3 = 3
 			<main className="main">
 				<div className="topbar">
 					<div className="title">Inicio</div>
-					<div>
-						<button
-							className="hamburger"
-							id="btnToggle"
-							onClick={() => setSidebarOpen((s) => !s)}
-							aria-label="Toggle navigation"
-						>
-							☰
-						</button>
-					</div>
+					
 				</div>
 
 				<div className="grid">

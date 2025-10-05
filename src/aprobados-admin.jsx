@@ -15,6 +15,8 @@ function loadApproved() {
 export default function AprobadosAdmin() {
   const [approved, setApproved] = useState(loadApproved)
   const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/'
+  const [propuestasOpen, setPropuestasOpen] = useState(false)
+  const [proyectosOpen, setProyectosOpen] = useState(false)
 
   useEffect(() => {
     localStorage.setItem('approved_projects', JSON.stringify(approved))
@@ -30,9 +32,95 @@ export default function AprobadosAdmin() {
         <div className="brand"><span className="dot"/> Fundación La Favorita</div>
         <nav>
           <ul>
-            <li><a href="/inicio-admin" onClick={(e)=>{e.preventDefault(); window.appNavigate('/inicio-admin')}}>Inicio</a></li>
-            <li><a href="/presentados-admin" onClick={(e)=>{e.preventDefault(); window.appNavigate('/presentados-admin')}}>Proyectos presentados</a></li>
-            <li><a href="/aprobados-admin" onClick={(e)=>{e.preventDefault(); window.appNavigate('/aprobados-admin')}} className="active">Proyectos aprobados</a></li>
+            <li className={currentPath === "/inicio-admin" ? "active" : ""}>
+              <a
+                href="/inicio-admin"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.appNavigate("/inicio-admin");
+                }}
+              >
+                Inicio
+              </a>
+            </li>
+            <li>
+              <button
+                className="nav-toggle"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPropuestasOpen((s) => !s);
+                }}
+              >
+                Propuestas
+                <span className={`chev ${propuestasOpen ? "open" : ""}`}>
+                  ▾
+                </span>
+              </button>
+              <ul className={`nested ${propuestasOpen ? "open" : ""}`}>
+                <li>Propuestas presentadas</li>
+                <li>Propuestas aceptadas</li>
+                <li>Propuestas rechazadas</li>
+                <li>Propuestas por modificar</li>
+              </ul>
+            </li>
+            <li className={currentPath === "/kpis" ? "active" : ""}>
+              <a
+                href="/kpis"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.appNavigate("/kpis");
+                }}
+              >
+                KPI's aprobados
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://app.powerbi.com/view?r=eyJrIjoiNTNkYjIxMjAtNTAxYy00NTdlLTg3MzktY2U0MDljNDgzMWEwIiwidCI6ImQ4MmUyZTBkLTk4ZTEtNGNlZS1hZjQ0LTZjN2I2MTcwNjZlNyIsImMiOjR9&pageName=5f816036bbbaa2127d99"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Reportes
+              </a>
+            </li>
+            <li>
+              <button
+                className="nav-toggle"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setProyectosOpen((s) => !s);
+                }}
+              >
+                Proyectos
+                <span className={`chev ${proyectosOpen ? "open" : ""}`}>▾</span>
+              </button>
+              <ul className={`nested ${proyectosOpen ? "open" : ""}`}>
+                <li>
+                  <a
+                    href="/presentados-admin"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.appNavigate("/presentados-admin");
+                    }}
+                  >
+                    Proyectos presentados
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/aprobados-admin"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.appNavigate("/aprobados-admin");
+                    }}
+                  >
+                    Proyectos aprobados
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>Donaciones</li>
+            <li>Presupuestos asignados</li>
           </ul>
         </nav>
       </aside>

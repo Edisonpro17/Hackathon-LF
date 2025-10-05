@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import '../styles.css'
 
-export default function MenuAdmin({ currentPath = '/' }) {
+export default function MenuAdmin({ currentPath = '/', onLogout }) {
   const [propuestasOpen, setPropuestasOpen] = useState(false)
   const [proyectosOpen, setProyectosOpen] = useState(false)
 
@@ -84,6 +84,20 @@ export default function MenuAdmin({ currentPath = '/' }) {
           </li>
         </ul>
       </nav>
+          <button
+            onClick={() => {
+              if (typeof onLogout === 'function') return onLogout()
+              // fallback: call global logout handler if present
+              if (typeof window !== 'undefined') {
+                if (typeof window.appOnLogout === 'function') return window.appOnLogout()
+                if (typeof window.appNavigate === 'function') return window.appNavigate('/')
+                return (window.location.href = '/')
+              }
+            }}
+            style={{ marginTop: 16 }}
+          >
+            Cerrar sesión
+          </button>
     </aside>
   )
 }

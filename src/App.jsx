@@ -2,7 +2,7 @@ import "./App.css";
 import PpxButton from "./components/PpxButton";
 import { data } from "./configuration/ppx.data";
 import React, { useState } from 'react'
-import Login from './login.jsx'
+import Login from './Login.jsx'
 import Fundacion from './Fundacion'
 
 function App() {
@@ -35,3 +35,4 @@ function App() {
 }
 
 export default App;
+

@@ -13,6 +13,14 @@ function Login({ onLogin }) {
     // demo credentials
     if (username === 'admin' && password === '1234') {
       onLogin({ name: username, role: 'admin' })
+      // redirect admin to inicio-admin (use appNavigate helper if available)
+      if (typeof window !== 'undefined') {
+        if (typeof window.appNavigate === 'function') {
+          window.appNavigate('/inicio-admin')
+        } else {
+          window.location.href = '/inicio-admin'
+        }
+      }
       return
     }
 
@@ -86,4 +94,4 @@ function Login({ onLogin }) {
   )
 }
 
-export default Login
+export default Login

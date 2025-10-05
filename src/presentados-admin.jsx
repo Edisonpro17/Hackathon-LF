@@ -12,6 +12,7 @@ export default function PresentadosAdmin() {
   const [detail, setDetail] = useState(null)
   const [propuestasOpen, setPropuestasOpen] = useState(false)
   const [proyectosOpen, setProyectosOpen] = useState(false)
+  const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/'
 
   function markCorrections(id) {
     setProjects((prev) => prev.map(p => p.id === id ? { ...p, status: 'En corrección' } : p))

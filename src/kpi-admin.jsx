@@ -58,7 +58,7 @@ export default function KpiAdmin() {
         </div>
         <nav>
           <ul>
-            <li>
+            <li className={currentPath === '/inicio-admin' ? 'active' : ''}>
               <a href="/inicio-admin" onClick={(e) => { e.preventDefault(); window.appNavigate('/inicio-admin') }}>Inicio</a>
             </li>
             <li>
@@ -76,7 +76,7 @@ export default function KpiAdmin() {
                 <li>Propuestas por modificar</li>
               </ul>
             </li>
-            <li>
+            <li className={currentPath === '/kpis' ? 'active' : ''}>
               <a href="/kpis" onClick={(e) => { e.preventDefault(); window.appNavigate('/kpis') }}>KPI's aprobados</a>
             </li>
             <li>

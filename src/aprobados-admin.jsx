@@ -12,6 +12,7 @@ function loadApproved() {
 
 export default function AprobadosAdmin() {
   const [approved, setApproved] = useState(loadApproved)
+  const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/'
 
   useEffect(() => {
     localStorage.setItem('approved_projects', JSON.stringify(approved))

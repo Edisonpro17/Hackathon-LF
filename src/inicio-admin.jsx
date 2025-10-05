@@ -43,7 +43,7 @@ export default function InicioAdmin({ initialValue = 20000.0, projectsMonth3 = 3
 				</div>
 				<nav>
 					<ul>
-						<li className="active">
+						<li className={currentPath === '/inicio-admin' ? 'active' : ''}>
 							<a href="/inicio-admin" onClick={(e) => { e.preventDefault(); window.appNavigate('/inicio-admin') }}>Inicio</a>
 						</li>
 						 <li>

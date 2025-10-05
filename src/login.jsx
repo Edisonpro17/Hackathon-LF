@@ -87,7 +87,7 @@ function Login({ onLogin }) {
         <a className="forgotLink" href="#">¿Olvidaste la contraseña?</a>
 
         <p className="demoNote">
-          Credenciales demo — Admin: admin / 1234 · Fundación: favorita / abcd
+          
         </p>
       </form>
     </div>
@@ -95,3 +95,5 @@ function Login({ onLogin }) {
 }
 
 export default Login
+
+//Credenciales demo — Admin: admin / 1234 · Fundación: favorita / abcd
